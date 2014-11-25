@@ -43,3 +43,8 @@ Temporary Items
 .apdisk
 
 Library/
+
+Assembly-CSharp-vs.csproj
+Assembly-CSharp.csproj
+inercia-csharp.sln
+inercia.sln
