@@ -21,18 +21,16 @@ public class mouseinertial : MonoBehaviour
 			_velocity = _curPosition - _prevPosition;
 			transform.position = _curPosition;
 			rigidbody.velocity = Vector3.zero;	
-				}
+			}
 	}
 
 	void OnMouseOver () {
 
 		if (Input.GetMouseButtonDown (1)) {
-			// Get the direction of the camera	
 					if (_pressmouse) _pressmouse = false;
 					rigidbody.AddForce(Camera.main.transform.forward * 500);
 				}
 		if (Input.GetMouseButtonDown (2)) {
-						//Debug.Log ("Pressed middle click.");
 					if (_pressmouse)_pressmouse = false;
 					rigidbody.AddForce(-Camera.main.transform.forward * 500);
 				}
@@ -51,8 +49,9 @@ public class mouseinertial : MonoBehaviour
 						rigidbody.velocity = Vector3.zero;
 						rigidbody.AddTorque (new Vector3 (10, 10, 0) * fuerza);
 				}
-				else
-						_pressmouse = false;
+		else {
+			_pressmouse = false;
+				}
 
 	}
 	void OnMouseDrag()
