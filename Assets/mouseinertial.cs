@@ -3,24 +3,51 @@ using System.Collections;
 
 public class mouseinertial : MonoBehaviour
 {
+	//
+	public float fuerza=300;
+	public GameObject _forcebeam;
+	//
+	private GameObject _cloneforcebeam;
 	private Vector3 _screenPoint;
 	private Vector3 _offset;
 	private Vector3 _curScreenPoint;
 	private Vector3 _curPosition;
 	private Vector3 _velocity;
-	private bool _underInertia;
 	private bool _pressmouse;
 	private float _time = 0.0f;
-	public float fuerza=300;
+	private Vector3 _direccion,_temp;
+	private float _desviationy=0.0f;
+	private bool bajando=false;
+
 	void FixedUpdate()
 	{
 		if (_pressmouse) {
+			//aqui vamos a hacer un movimiento en el eje de las y para simular que esta flotando
+
+			if (bajando)_desviationy=_desviationy-0.01f;
+			else _desviationy=_desviationy+0.01f;
+
+			//if (_desviationy>0.25f) {bajando=true;}
+			//if (_desviationy<=-0.25f) {bajando=false;}
+
+			if (_desviationy>0.3f) {bajando=true;}
+			if (_desviationy<=-0.3f) {bajando=false;}
+			/////
 			Vector3 _prevPosition = _curPosition;
 			_curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _screenPoint.z);
 			_curPosition = Camera.main.ScreenToWorldPoint(_curScreenPoint) + _offset;
 			_velocity = _curPosition - _prevPosition;
+			_curPosition.y=_curPosition.y+_desviationy;
 			transform.position = _curPosition;
 			rigidbody.velocity = Vector3.zero;	
+			//dirigir el haz de particulas al objeto.
+			_temp=Camera.main.transform.position;
+			_direccion=_curPosition-_temp;
+
+			//_forcebeam.transform.position=Camera.main.transform.position; // lo centramos en la camara
+			//_cloneforcebeam.transform.Rotate(_direccion);//lo dirigimos al objeto.
+			//_cloneforcebeam.transform.localPosition = _temp;
+			//_cloneforcebeam.particleSystem.
 			}
 	}
 
@@ -45,28 +72,18 @@ public class mouseinertial : MonoBehaviour
 						_screenPoint = Camera.main.WorldToScreenPoint (gameObject.transform.position);
 						_offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint (new Vector3 (Input.mousePosition.x, Input.mousePosition.y, _screenPoint.z));
 						Screen.showCursor = false;
-						_underInertia = false;
 						rigidbody.velocity = Vector3.zero;
-						rigidbody.AddTorque (new Vector3 (10, 10, 0) * fuerza);
+						rigidbody.AddTorque (new Vector3 (10, 10, 0) * fuerza); //rotacion al cogerlo en vueloç
+						//encender las particulas
+						//_cloneforcebeam = (GameObject)Instantiate(_forcebeam,Camera.main.transform.position,Camera.main.transform.rotation);
 				}
 		else {
-			_pressmouse = false;
-				}
+				Screen.showCursor = true;
+				rigidbody.AddForce(_velocity * fuerza); //fuerza de inercia.
+				_pressmouse = false;
+				//apagar las particulas
+				//Destroy(_cloneforcebeam);
+			}
 
-	}
-	void OnMouseDrag()
-	{
-		/*Vector3 _prevPosition = _curPosition;
-		_curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, _screenPoint.z);
-		_curPosition = Camera.main.ScreenToWorldPoint(_curScreenPoint) + _offset;
-		_velocity = _curPosition - _prevPosition;
-		transform.position = _curPosition;
-		rigidbody.velocity = Vector3.zero;*/
-	}
-	void OnMouseUp()
-	{
-		_underInertia = true;
-		Screen.showCursor = true;
-		rigidbody.AddForce(_velocity * fuerza);
 	}
 }

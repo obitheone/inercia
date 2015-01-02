@@ -29,15 +29,15 @@ public class particlemouse : MonoBehaviour {
 	float distance = 5;
 	void LateUpdate ()
 	{
-		ParticleSystem.Particle[] particles = new ParticleSystem.Particle[particleSystem.particleCount];
+	/*	ParticleSystem.Particle[] particles = new ParticleSystem.Particle[particleSystem.particleCount];
 		int count = particleSystem.GetParticles(particles);
 		
 		for(int i = 0; i < count; i++)
 		{
 			float yVel = (particles[i].lifetime / particles[i].startLifetime) * distance;
-			particles[i].velocity = new Vector3(0, yVel, i);
+			particles[i].velocity = new Vector3(0, -yVel, i);
 		}
-		particleSystem.SetParticles(particles, count);
+		particleSystem.SetParticles(particles, count);*/
 	}
 
 	void FixedUpdate()
