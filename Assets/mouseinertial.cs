@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 
 public class mouseinertial : MonoBehaviour
 {
 	//
 	public float fuerza=300;
-	public GameObject _forcebeam;
 	//
-	private GameObject _cloneforcebeam;
+	private GameObject _clonelinerender;
 	private Vector3 _screenPoint;
 	private Vector3 _offset;
 	private Vector3 _curScreenPoint;
@@ -45,9 +45,9 @@ public class mouseinertial : MonoBehaviour
 			_direccion=_curPosition-_temp;
 
 			//_forcebeam.transform.position=Camera.main.transform.position; // lo centramos en la camara
-			//_cloneforcebeam.transform.Rotate(_direccion);//lo dirigimos al objeto.
-			//_cloneforcebeam.transform.localPosition = _temp;
-			//_cloneforcebeam.particleSystem.
+			//_clonelinerender.transform.Rotate(_direccion);//lo dirigimos al objeto.
+			//_clonelinerender.transform.localPosition = _temp;
+			//_clonelinerender.particleSystem.
 			}
 	}
 
@@ -75,14 +75,19 @@ public class mouseinertial : MonoBehaviour
 						rigidbody.velocity = Vector3.zero;
 						rigidbody.AddTorque (new Vector3 (10, 10, 0) * fuerza); //rotacion al cogerlo en vueloç
 						//encender las particulas
-						//_cloneforcebeam = (GameObject)Instantiate(_forcebeam,Camera.main.transform.position,Camera.main.transform.rotation);
+						
+						Object linerender = AssetDatabase.LoadAssetAtPath("Assets/linerender.prefab", typeof(GameObject));
+						_clonelinerender = (GameObject)Instantiate(linerender);		
+						linerenderscript script = _clonelinerender.GetComponent("linerenderscript") as linerenderscript;
+						script.origin=Camera.main.transform;
+						script.destination=gameObject.transform;
 				}
 		else {
 				Screen.showCursor = true;
 				rigidbody.AddForce(_velocity * fuerza); //fuerza de inercia.
 				_pressmouse = false;
 				//apagar las particulas
-				//Destroy(_cloneforcebeam);
+				Destroy(_clonelinerender);
 			}
 
 	}
