@@ -1,9 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\linerenderscript.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\mouseinertial.cs">
     <Files>
-      <File FileName="Assets\linerenderscript.cs" Line="6" Column="36" />
-      <File FileName="Assets\mouseinertial.cs" Line="64" Column="3" />
+      <File FileName="Assets\linerenderscript.cs" Line="22" Column="2" />
+      <File FileName="Assets\mouseinertial.cs" Line="66" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
